@@ -11,17 +11,20 @@ FILE *open_file(char filename[], char mode[]){ //mode generalises the function t
     return file;
 }
 
-int main(){
-    char filename [] = "data.txt";
-    FILE *file = open_file(filename, "r");
-
-
-    int buffer_size = 100; //buffer should be longer than the largest line plus 1
-    char line_buffer[buffer_size];
-    //fgets reads the file line by line into a buffer
-    while (fgets(line_buffer, buffer_size, file) != NULL){
-        printf("%s", line_buffer);
+int main() {
+    char filename [] = "FitnessData_2023.csv";
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("");
+        return 1;
     }
+
+    int buffer_size = 100;
+    char line_buffer[buffer_size];
+    while (fgets(line_buffer, buffer_size, file) != NULL) {
+        printf("%d\n", atoi(line_buffer));
+    }
+
     fclose(file);
     return 0;
 }
