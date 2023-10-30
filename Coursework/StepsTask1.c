@@ -10,8 +10,7 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-
-
+unsigned record[100];
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -38,26 +37,29 @@ void tokeniseRecord(const char *input, const char *delimiter,
     
     // Free the duplicated string
     free(inputCopy);
-
 }
 
 // Complete the main function
 int main() {
+    int rows = 0; //holds the number of records
 
     char filename [] = "FitnessData_2023.csv";
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen(filename, "r"); 
     if (file == NULL) {
         perror("");
         return 1;
     }
-
-    int buffer_size = 10000;
+    char data[100];
+    int buffer_size = 100; 
     char line_buffer[buffer_size];
-    while (fgets(line_buffer, buffer_size, file) != NULL) {
-        printf("%d\n", atoi(line_buffer));
-    }
+    while (fgets(line_buffer, buffer_size, file) != NULL){
+        printf("%s", line_buffer);
+        record[rows] == line_buffer;
+        rows++;
+        }
 
     fclose(file);
+    printf("Number of records in file: %d\n", rows);
     return 0;
 }
 
