@@ -12,7 +12,7 @@ FILE *open_file(char filename[], char mode[]){ //mode generalises the function t
 }
 
 int main() {
-    char filename [] = "FitnessData_2023.csv";
+    char filename [] = "data.txt";
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("");

@@ -49,17 +49,25 @@ int main() {
         perror("");
         return 1;
     }
-    char data[100];
+    char *data[100];
     int buffer_size = 100; 
     char line_buffer[buffer_size];
     while (fgets(line_buffer, buffer_size, file) != NULL){
-        printf("%s", line_buffer);
-        record[rows] == line_buffer;
+        //printf("%s", line_buffer);
+        data[rows] == line_buffer;
         rows++;
         }
-
+    printf("%s\n", data[2]);
     fclose(file);
     printf("Number of records in file: %d\n", rows);
+
+    char records[21] = "2023-09-01,07:30,300";
+    tokeniseRecord(records, ",", date, time, steps);
+    FITNESS_DATA line [] = {
+        {date, time, steps}
+    };
+    printf("%s-%s-%d\n", date, time, steps);
+
     return 0;
 }
 

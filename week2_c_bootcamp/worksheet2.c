@@ -49,5 +49,16 @@ int main(){
     //}
 
 //task 5
+    int a[] = {1,2,3,4,4,5}, i, j;
+    for (i=0; i<6; i++)
+    {
+      for (j=i+1; j<6; j++)
+      {
+        if (a[i] == a[j])
+        {
+          printf("Duplicate %d\n", a[i]);
+        }
+      }
+    }
     return 0;
 }
