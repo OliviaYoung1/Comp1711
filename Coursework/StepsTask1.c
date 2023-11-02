@@ -10,7 +10,7 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-unsigned record[100];
+
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -49,24 +49,22 @@ int main() {
         perror("");
         return 1;
     }
-    char *data[100];
+    char data[100][100];
     int buffer_size = 100; 
     char line_buffer[buffer_size];
-    while (fgets(line_buffer, buffer_size, file) != NULL){
-        //printf("%s", line_buffer);
-        data[rows] == line_buffer;
+    while (fgets(data[rows], buffer_size, file) != NULL){
         rows++;
         }
-    printf("%s\n", data[2]);
+    printf("%s\n", data[0]);
     fclose(file);
     printf("Number of records in file: %d\n", rows);
 
-    char records[21] = "2023-09-01,07:30,300";
-    tokeniseRecord(records, ",", date, time, steps);
-    FITNESS_DATA line [] = {
-        {date, time, steps}
-    };
-    printf("%s-%s-%d\n", date, time, steps);
+    for (int x = 0; x <= rows; x++){
+        struct FITNESS_DATA record = ["","", 0];
+        tokeniseRecord(record)
+    }
+
+ 
 
     return 0;
 }
