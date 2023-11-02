@@ -55,17 +55,26 @@ int main() {
     while (fgets(data[rows], buffer_size, file) != NULL){
         rows++;
         }
-    printf("%s\n", data[0]);
     fclose(file);
     printf("Number of records in file: %d\n", rows);
 
-    for (int x = 0; x <= rows; x++){
-        struct FITNESS_DATA record = ["","", 0];
-        tokeniseRecord(record)
+    FITNESS_DATA FITNESS_DATAS[rows];
+    int x;
+    for (x = 0; x < rows ; x++){
+       char date[11];
+       char time[6];
+       char steps[10]; 
+       //printf("%s", data[x]); 
+       tokeniseRecord(data[x], ",", date, time, steps);
+        FITNESS_DATAS[x].date == date;
+        FITNESS_DATAS[x].time == time;
+        FITNESS_DATAS[x].steps == 10;
+        printf("%s\n", FITNESS_DATAS[x].date);
+
     }
-
- 
-
+    //printf("%s/%s/%d", FITNESS_DATAS[0].date, FITNESS_DATAS[0].time, FITNESS_DATAS[0].steps);
+    //printf("%s/%s/%d", FITNESS_DATAS[1].date, FITNESS_DATAS[1].time, FITNESS_DATAS[1].steps);
+    //printf("%s/%s/%d", FITNESS_DATAS[2].date, FITNESS_DATAS[2].time, FITNESS_DATAS[2].steps);
     return 0;
 }
 

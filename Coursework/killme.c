@@ -34,20 +34,9 @@ typedef struct {
 } FITNESS_DATA;
 
 int main() {
-    char record[21] = "2023-09-01,07:30,300";
-    struct FITNESS_DATA new_record
-
-    int stepsint;
-    
-    tokeniseRecord(record, ",", date, time, steps);
-    
-    printf("Date: %s\n", date);
-    printf("Time: %s\n", time);
-    printf("Steps: %s\n", steps);
-
-    // Convert the steps string to an integer
-    stepsint = atoi(steps);
-    printf("Steps as an integer: %d\n", stepsint);
-    
+    FITNESS_DATA record[];
+    FITNESS_DATA.date == "10-05-2023";
+    FITNESS_DATA.time-"18:00";
+    FITNESS_DATA.steps = 1000;
     return 0;
 }
