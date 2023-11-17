@@ -1,13 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "FitnessDataStruct.h"
-int main()
-{
-    // array of fitness data
-    FITNESS_DATA [100];
 
+// Struct moved to header file
+
+// Define any additional variables here
+// Global variables for filename and FITNESS_DATA array
+
+
+// This is your helper function. Do not change it in any way.
+// Inputs: character array representing a row; the delimiter character
+// Ouputs: date character array; time character array; steps character array
+void tokeniseRecord(const char *input, const char *delimiter,
+                    char *date, char *time, char *steps) {
+    // Create a copy of the input string as strtok modifies the string
+    char *inputCopy = strdup(input);
+    
+    // Tokenize the copied string
+    char *token = strtok(inputCopy, delimiter);
+    if (token != NULL) {        strcpy(date, token);
+    }
+    
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(time, token);
+    }
+    
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(steps, token);
+    }
+    
+    // Free the duplicated string
+    free(inputCopy);
+
+                    }
+
+
+// Complete the main function
+int main() {
+
+    int buffer_size = 100;
     char line[buffer_size];
     char filename[buffer_size];
-
-    // get filename from the user
+    // get the filename from the user
     printf("Please enter the name of the data file: ");
 
     // these lines read in a line from the stdin (where the user types)
@@ -20,21 +57,33 @@ int main()
     int counter = 0;
     float mean = 0;
 
-    counter = 0;
-    FILE *input = fopen(filename, "r");
-    if (!input)
-    {
-        printf("Error: File could not be opened\n");
+    FILE *file = fopen(filename, "r"); 
+    if (file == NULL) {
+        perror("");
         return 1;
     }
-    while (fgets(line, buffer_size, input))
+    //adding all rows into data array and counting rows
+    char data[100][100];
+     
+    char line_buffer[buffer_size];
+    while (fgets(data[counter], buffer_size, file) != NULL){
+        counter++;
+        }
+    fclose(file);
+    //tokensing the records and adding to the structue
+    FITNESS_DATA FITNESS_DATAS [counter];
+    int a;
+    for (a = 0; a < counter; a++)
     {
-    // split up the line and store it in the right place
-    // using the & operator to pass in a pointer to the bloodIron so it stores it
-    tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
-    counter++;
+        char date[11];
+        char time[6];
+        char steps[10];
+        tokeniseRecord(data[a], ",", date, time, steps);
+        strcpy(FITNESS_DATAS[a].date, date);
+        strcpy(FITNESS_DATAS[a].time, time);
+        FITNESS_DATAS[a].steps = atoi(steps);
     }
-    
+
 
     while (1)
         {
@@ -63,12 +112,12 @@ int main()
                 break;
             case 'B':
             case 'b':
-                return 0;
+                printf("Total records: %d\n", counter);
                 break;
             case 'C':
             case 'c':
-
-                return 0;
+                find_lowest(FITNESS_DATAS, counter);
+                
                 break;
 
             case 'D':
