@@ -83,7 +83,7 @@ int main() {
         strcpy(FITNESS_DATAS[a].time, time);
         FITNESS_DATAS[a].steps = atoi(steps);
     }
-
+    printf("%s", FITNESS_DATAS[a].date);
 
     while (1)
         {
@@ -108,7 +108,7 @@ int main() {
             // this allows for either capital or lower case
             case 'A':
             case 'a':
-                return 0;
+                main();
                 break;
             case 'B':
             case 'b':
@@ -116,8 +116,8 @@ int main() {
                 break;
             case 'C':
             case 'c':
-                //find_lowest(FITNESS_DATAS, counter);
                 
+
                 break;
 
             case 'D':
@@ -137,8 +137,7 @@ int main() {
 
             case 'Q':
             case 'q':
-                return 0;
-                break;
+                exit(0);
 
             // if they type anything else:
             default:
