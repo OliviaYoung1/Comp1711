@@ -5,9 +5,6 @@
 
 // Struct moved to header file
 
-// Define any additional variables here
-// Global variables for filename and FITNESS_DATA array
-
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -40,37 +37,35 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-
-    int buffer_size = 100;
+    char choice;
+    int counter = 0;
+    int buffer_size = 100; 
+    char filename [100];
     char line[buffer_size];
-    char filename[buffer_size];
-    // get the filename from the user
-    printf("Please enter the name of the data file: ");
+    int mean;
+    int rounded_mean;
 
-    // these lines read in a line from the stdin (where the user types)
-    // and then takes the actual string out of it
-    // this removes any spaces or newlines.
+    //get file name 
+    printf("Please enter the name of the data file: ");
     fgets(line, buffer_size, stdin);
     sscanf(line, " %s ", filename);
 
-    char choice;
-    int counter = 0;
-    float mean = 0;
-
+    //read the file
     FILE *file = fopen(filename, "r"); 
     if (file == NULL) {
         perror("");
         return 1;
     }
-    //adding all rows into data array and counting rows
+
+    //adding all the rows into data array and counting rows
     char data[100][100];
-     
     char line_buffer[buffer_size];
     while (fgets(data[counter], buffer_size, file) != NULL){
         counter++;
         }
     fclose(file);
-    //tokensing the records and adding to the structue
+
+    //tokensing records and adding to structue
     FITNESS_DATA FITNESS_DATAS [counter];
     int a;
     for (a = 0; a < counter; a++)
@@ -82,9 +77,16 @@ int main() {
         strcpy(FITNESS_DATAS[a].date, date);
         strcpy(FITNESS_DATAS[a].time, time);
         FITNESS_DATAS[a].steps = atoi(steps);
+        //mean to be used in task E
+        mean = mean + FITNESS_DATAS[a].steps;
     }
-    printf("%s", FITNESS_DATAS[a].date);
 
+    //for task c
+    int lowest_value = FITNESS_DATAS[0].steps, lowest_index = 0;
+    //for task d
+    int highest_value = FITNESS_DATAS[0].steps, highest_index = 0;
+    //for task f
+    int currentStart = 0, currentEnd = 0, longestStart = 0, longestEnd = 0;
     while (1)
         {
             printf("A: Specify the filename to be imported\n");
@@ -95,19 +97,16 @@ int main() {
             printf("F: Find the longest continuous period where the step count is above 500 steps\n");
             printf("Q: Exit\n");
 
-            // get the next character typed in and store in the 'choice'
+            //gets users choice
             choice = getchar();
-
-            // this gets rid of the newline character which the user will enter
-            // as otherwise this will stay in the stdin and be read next time
             while (getchar() != '\n');
 
-            // switch statement to control the menu.
+            // controls the menu
             switch (choice)
             {
-            // this allows for either capital or lower case
             case 'A':
             case 'a':
+            //calls the main function again to allow the user to change the file
                 main();
                 break;
             case 'B':
@@ -116,27 +115,65 @@ int main() {
                 break;
             case 'C':
             case 'c':
-                
-
+            //finds the lowest value
+                for (int i = 1; i < counter; i++) {        
+                    if (FITNESS_DATAS[i].steps < lowest_value){
+                        lowest_value == FITNESS_DATAS[i].steps;
+                        lowest_index = i;
+                    }
+                } 
+                printf("%s %s\n", FITNESS_DATAS[lowest_index].date, FITNESS_DATAS[lowest_index].time);  
                 break;
 
             case 'D':
             case 'd':
-                return 0;
+            //finds highest value
+                for (int j = 1; j < counter; j++) {       
+                    if (FITNESS_DATAS[j].steps > highest_value){
+                        highest_value = FITNESS_DATAS[j].steps;
+                        highest_index = j;
+                    }
+                } 
+                printf("%s %s\n", FITNESS_DATAS[highest_index].date, FITNESS_DATAS[highest_index].time);  
                 break;
 
             case 'E':
             case 'e':
-                return 0;
+            //finds mean
+                mean = mean / counter;
+                printf("Mean step count: %d\n", mean);
                 break;
 
             case 'F':
             case 'f':
-                return 0;
+            //finds longest period >500
+                for (int i = 0; i < counter; i++) {
+                    if (FITNESS_DATAS[i].steps > 500) {
+                    // If the current period is ongoing, update the ending index
+                    currentEnd = i;
+                    } else {
+                        // If the current period is not ongoing, check if it's the longest
+                        if (currentEnd - currentStart > longestEnd - longestStart) {
+                            longestStart = currentStart;
+                            longestEnd = currentEnd;
+                        }
+                        // Reset the current period
+                        currentStart = currentEnd = i + 1;
+                    }
+                }
+                
+                // Check for the last continuous period
+                if (currentEnd - currentStart > longestEnd - longestStart) {
+                    longestStart = currentStart;
+                    longestEnd = currentEnd;
+                }
+                printf("Longest period start:%s %s\n", FITNESS_DATAS[longestStart].date, FITNESS_DATAS[longestStart].time);
+                printf("Longest period end:%s %s\n", FITNESS_DATAS[longestEnd].date, FITNESS_DATAS[longestEnd].time);
                 break;
 
             case 'Q':
             case 'q':
+            //exits all recurive loops
                 exit(0);
 
             // if they type anything else:
