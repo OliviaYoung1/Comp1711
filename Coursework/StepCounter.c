@@ -116,7 +116,7 @@ int main() {
                 break;
             case 'C':
             case 'c':
-                find_lowest(FITNESS_DATAS, counter);
+                //find_lowest(FITNESS_DATAS, counter);
                 
                 break;
 
