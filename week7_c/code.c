@@ -2,7 +2,7 @@
 
 int main()
 {
-    // array of daily readings
+    // array of records 
     reading daily_readings[100];
 
     char line[buffer_size];
@@ -35,6 +35,7 @@ int main()
     tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
     counter++;
     }
+    float highest_num = daily_readings[0].bloodIron;
     
     while (1)
     {
@@ -80,11 +81,18 @@ int main()
         case 'C':
         case 'c':
             
-            return 0;
             break;
 
         case 'D':
         case 'd':
+            
+            for (int i = 0; i < counter ; i++)
+                {
+                   if (daily_readings[i].bloodIron > highest_num){
+                    highest_num = daily_readings[i].bloodIron;
+                    }
+                }
+            printf("Your highest blood iron was %f\n", &highest_num);
             return 0;
             break;
 

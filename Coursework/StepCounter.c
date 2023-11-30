@@ -42,7 +42,7 @@ void file_choice(char filename[], FITNESS_DATA FITNESS_DATAS[], int *rows){
     rows = 0;
 	FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Error: could not open file");
+        printf("Error: could not open file");
         exit(1);
     }
 

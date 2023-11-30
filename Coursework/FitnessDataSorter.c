@@ -40,6 +40,39 @@ void sortData(FITNESS_DATA data[], int rows) {
     }
 }
 
+int validate(const char *str) {
+    int count = 0;
+    while (*str) {
+        if (*str == ',') {
+            count++;
+        }
+        str++;
+    }
+    return count;
+}
+
+int valid_time(const char *str) {
+    int hrs, mins;
+    char colon;
+    if (sscanf(str, "%d:%d%c", &hrs, &mins, &colon) == 2) {
+        if (hrs >= 0 && hrs <= 23 && mins >= 0 && mins <= 59) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int valid_date(const char *str) {
+    int day, month, year;
+    char dash1, dash2;
+    if (sscanf(str, "%d-%d-%d%c", &year, &month, &day, &dash1) == 3) {
+        if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1900) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 int main() {
     char filename[100];
     printf("Enter filename: ");
@@ -47,7 +80,7 @@ int main() {
 
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Error: invalid file");
+        printf("Error: invalid file");
         return 1;
     }
 
@@ -58,6 +91,9 @@ int main() {
 
     while (fgets(line, buffer_size, file) != NULL) {
         rows++;
+        if (validate(line) != 2){
+            return 1;
+        }
     }
 
     rewind(file);
@@ -74,6 +110,21 @@ int main() {
         strcpy(FITNESS_DATAS[i].date, date);
         strcpy(FITNESS_DATAS[i].time, time);
         FITNESS_DATAS[i].steps = steps;
+        if (strlen(FITNESS_DATAS[i].date) != 10){
+            return 1;
+        }
+        if (strlen(FITNESS_DATAS[i].time) != 5){
+            return 1;
+        }
+        if (valid_time(FITNESS_DATAS[i].time) == 1){
+            return 1;
+        }
+        if (valid_date(FITNESS_DATAS[i].date) == 1){
+            return 1;
+        }
+        
+        
+    
     }
 
     fclose(file);

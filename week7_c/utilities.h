@@ -111,14 +111,7 @@ float find_mean(reading* dataArray, int numReadings)
  */
 float find_highest(reading* dataArray, int numReadings)
 {
-    float highest_num = dataArray[0];
-    for (int i = 0; i < numReadings ; i++)
-            {
-                if (dataArray[i] > highest_num){
-                    highest_num = dataArray[i];
-                }
-            }
-    printf("Your highest blood iron was %f\n", &lowest_num);
+    
 }
 
 /**
@@ -130,14 +123,7 @@ float find_highest(reading* dataArray, int numReadings)
  */
 float find_lowest(reading* dataArray, int numReadings)
 {
-    float lowest_num = dataArray[0];
-    for (int i = 0; i < numReadings ; i++)
-            {
-                if (dataArray[i] < lowest_num){
-                    lowest_num = dataArray[i];
-                }
-            }
-    printf("Your lowest blood iron was %f\n", &lowest_num);
+
 }
 
 
@@ -150,4 +136,5 @@ float find_lowest(reading* dataArray, int numReadings)
 void monthly_iron(reading* dataArray, int numReadings)
 {
     // to do
+    
 }
