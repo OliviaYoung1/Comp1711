@@ -41,6 +41,7 @@ void sortData(FITNESS_DATA data[], int rows) {
 }
 
 int validate(const char *str) {
+    //sees how many commas, should be 2
     int count = 0;
     while (*str) {
         if (*str == ',') {
@@ -52,6 +53,7 @@ int validate(const char *str) {
 }
 
 int valid_time(const char *str) {
+    //sees qif time is in xx:xx format within bounds
     int hrs, mins;
     char colon;
     if (sscanf(str, "%d:%d%c", &hrs, &mins, &colon) == 2) {
@@ -63,6 +65,7 @@ int valid_time(const char *str) {
 }
 
 int valid_date(const char *str) {
+    //sees if date is in yyyy/mm/dd format
     int day, month, year;
     char dash1, dash2;
     if (sscanf(str, "%d-%d-%d%c", &year, &month, &day, &dash1) == 3) {
@@ -73,6 +76,7 @@ int valid_date(const char *str) {
     return 1;
 }
 
+
 int main() {
     char filename[100];
     printf("Enter filename: ");
@@ -80,7 +84,7 @@ int main() {
 
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        printf("Error: invalid file");
+        printf("Error: invalid file\n");
         return 1;
     }
 
@@ -92,6 +96,7 @@ int main() {
     while (fgets(line, buffer_size, file) != NULL) {
         rows++;
         if (validate(line) != 2){
+            printf("Error: invalid file\n");
             return 1;
         }
     }
@@ -111,20 +116,23 @@ int main() {
         strcpy(FITNESS_DATAS[i].time, time);
         FITNESS_DATAS[i].steps = steps;
         if (strlen(FITNESS_DATAS[i].date) != 10){
+            printf("Error: invalid file\n");
             return 1;
         }
         if (strlen(FITNESS_DATAS[i].time) != 5){
+            printf("Error: invalid file\n");
             return 1;
         }
         if (valid_time(FITNESS_DATAS[i].time) == 1){
+            printf("Error: invalid file\n");
             return 1;
         }
         if (valid_date(FITNESS_DATAS[i].date) == 1){
+            printf("Error: invalid file\n");
             return 1;
         }
-        
-        
     
+
     }
 
     fclose(file);

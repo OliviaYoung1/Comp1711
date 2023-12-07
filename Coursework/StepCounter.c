@@ -46,7 +46,7 @@ int file_choice(char filename[], FITNESS_DATA FITNESS_DATAS[], int *rows){
         return 1;
     }
 
-    int buffer_size = 100;
+    int buffer_size = 200;
     char line[buffer_size];
 
     while (fgets(line, buffer_size, file) != NULL) {
@@ -67,7 +67,7 @@ void total_records(int rows){
 	printf("Total records: %d\n", rows);
 }
 void fewest_steps(FITNESS_DATA FITNESS_DATAS[], int rows){
-	int min_steps = 0;
+	int min_steps = 1000000;
 	int index = 0;
 	for (int i = 0; i < rows; i++) {
 		if (FITNESS_DATAS[i].steps < min_steps) {
@@ -75,7 +75,6 @@ void fewest_steps(FITNESS_DATA FITNESS_DATAS[], int rows){
             index = i;
 		}
 	}
-
 	printf("Fewest steps: %s %s\n", FITNESS_DATAS[index].date, FITNESS_DATAS[index].time);
 }
 
@@ -95,52 +94,51 @@ void highest_steps(FITNESS_DATA FITNESS_DATAS[], int rows){
 
 void mean_steps(FITNESS_DATA FITNESS_DATAS[], int rows){
 	int total_steps = 0;
-
     for (int i = 0; i < rows; i++) {
         total_steps = total_steps + FITNESS_DATAS[i].steps;
     }
-
-	float mean_steps = total_steps / rows;
-	int rounded_mean = mean_steps + 0.5;
+    float mean_steps = (float)total_steps / rows;
+    int rounded_mean = (int)(mean_steps + 0.5);
     printf("Mean step count: %d\n", rounded_mean);
 }
 
 
 void above_500(FITNESS_DATA FITNESS_DATAS[], int rows){
-	int currentStart = 0, currentEnd = 0, longestStart = 0, longestEnd = 0;
-	for (int i = 0; i < rows; i++) {
+    int currentStart = 0, currentEnd = 0, longestStart = 0, longestEnd = 0;
+
+    for (int i = 0; i < rows; i++) {
         if (FITNESS_DATAS[i].steps > 500) {
-        // If the current period is ongoing, update the ending index
-        currentEnd = i;
+            //update ending index
+            currentEnd = i;
         } else {
-            // If the current period is not ongoing, check if it's the longest
+            // check if current longest period
             if (currentEnd - currentStart > longestEnd - longestStart) {
                 longestStart = currentStart;
                 longestEnd = currentEnd;
             }
-            // Reset the current period
-            currentStart = currentEnd = i + 1;
+            // Reset the current period's start
+            currentStart = i + 1;
+            currentEnd = i + 1; 
         }
     }
-                
-    // Check for the last continuous period
+    
     if (currentEnd - currentStart > longestEnd - longestStart) {
         longestStart = currentStart;
         longestEnd = currentEnd;
     }
-    printf("Longest period start:%s %s\n", FITNESS_DATAS[longestStart].date, FITNESS_DATAS[longestStart].time);
-    printf("Longest period end:%s %s\n", FITNESS_DATAS[longestEnd].date, FITNESS_DATAS[longestEnd].time);
-               
+
+    printf("Longest period start: %s %s\n", FITNESS_DATAS[longestStart].date, FITNESS_DATAS[longestStart].time);
+    printf("Longest period end: %s %s\n", FITNESS_DATAS[longestEnd].date, FITNESS_DATAS[longestEnd].time);
 }
 
 
 // Complete the main function
 int main() {
-   char filename[100];
+   char filename[200];
     int choice;
     int rows = 0;
     int file_selected = 0; //to see if a has been selected yet
-    FITNESS_DATA FITNESS_DATAS[100];
+    FITNESS_DATA FITNESS_DATAS[300];
 
     while (1)
     {
