@@ -38,12 +38,12 @@ void tokeniseRecord(const char *input, const char *delimiter,
 }
 
 
-void file_choice(char filename[], FITNESS_DATA FITNESS_DATAS[], int *rows){
-    rows = 0;
+int file_choice(char filename[], FITNESS_DATA FITNESS_DATAS[], int *rows){
+    *rows = 0;
 	FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error: could not open file");
-        exit(1);
+        return 1;
     }
 
     int buffer_size = 100;
@@ -59,10 +59,10 @@ void file_choice(char filename[], FITNESS_DATA FITNESS_DATAS[], int *rows){
         FITNESS_DATAS[*rows].steps = atoi(str_steps);
         (*rows)++;
     }
-
     fclose(file);
-
+    return 0;
 }
+
 void total_records(int rows){
 	printf("Total records: %d\n", rows);
 }
@@ -139,6 +139,7 @@ int main() {
    char filename[100];
     int choice;
     int rows = 0;
+    int file_selected = 0; //to see if a has been selected yet
     FITNESS_DATA FITNESS_DATAS[100];
 
     while (1)
@@ -154,38 +155,53 @@ int main() {
         //gets users choice
         choice = getchar();
         while (getchar() != '\n');
+
         // controls the menu
         switch (choice){
             case 'A':
             case 'a':
                 printf("Input filename:");
                 scanf("%s", filename);
-                file_choice(filename, FITNESS_DATAS, &rows);
+                while (getchar() != '\n');
+                if (file_choice(filename, FITNESS_DATAS, &rows) == 1){
+                    return 1;
+                }
+                file_selected = 1;
                 break;
-            
+
             case 'B':
             case 'b':
-                total_records(rows);
+                if (file_selected == 1){
+                    total_records(rows);
+                }
                 break;
 
             case 'C':
             case 'c':
+            if (file_selected == 1){
                 fewest_steps(FITNESS_DATAS, rows);
+            }
                 break;
 
             case 'D':
             case 'd':
+                if (file_selected == 1){
                 highest_steps(FITNESS_DATAS, rows);
+                }
                 break;
 
             case 'E':
             case 'e':
+                if (file_selected == 1){
                 mean_steps(FITNESS_DATAS, rows);
+                }
                 break;
 
             case 'F':
             case 'f':
+                if (file_selected == 1){
                 above_500(FITNESS_DATAS, rows);
+                }
                 break;
 
             case 'Q':
@@ -195,9 +211,10 @@ int main() {
 
             default:
                 printf("Invalid choice.\n");
+                break;
     }
+        }
+}
 
-}
-}
 
 
