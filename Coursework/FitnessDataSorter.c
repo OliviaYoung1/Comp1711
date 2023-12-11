@@ -77,6 +77,8 @@ int valid_date(const char *str) {
 }
 
 
+
+
 int main() {
     char filename[100];
     printf("Enter filename: ");
@@ -115,7 +117,7 @@ int main() {
         strcpy(FITNESS_DATAS[i].date, date);
         strcpy(FITNESS_DATAS[i].time, time);
         FITNESS_DATAS[i].steps = steps;
-        if (strlen(FITNESS_DATAS[i].date) != 10){
+        if (strlen(FITNESS_DATAS[i].date) != 10 || FITNESS_DATAS[i].steps < 0 || FITNESS_DATAS[i].steps >= 500000){
             printf("Error: invalid file\n");
             return 1;
         }
