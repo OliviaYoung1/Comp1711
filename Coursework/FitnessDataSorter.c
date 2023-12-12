@@ -80,7 +80,7 @@ int valid_date(const char *str) {
 
 
 int main() {
-    char filename[100];
+    char filename[200];
     printf("Enter filename: ");
     scanf("%s", filename);
 
@@ -90,7 +90,7 @@ int main() {
         return 1;
     }
 
-    int buffer_size = 100;
+    int buffer_size = 200;
     char line[buffer_size];
     int rows = 0;
 
@@ -117,7 +117,7 @@ int main() {
         strcpy(FITNESS_DATAS[i].date, date);
         strcpy(FITNESS_DATAS[i].time, time);
         FITNESS_DATAS[i].steps = steps;
-        if (strlen(FITNESS_DATAS[i].date) != 10 || FITNESS_DATAS[i].steps < 0 || FITNESS_DATAS[i].steps >= 500000){
+        if (strlen(FITNESS_DATAS[i].date) != 10 || FITNESS_DATAS[i].steps < 0 || FITNESS_DATAS[i].steps >= 200000){
             printf("Error: invalid file\n");
             return 1;
         }
